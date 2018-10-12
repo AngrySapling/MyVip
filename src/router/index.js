@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 //引入缓存
-// import { getItem } from '../../components/Common/common'
+import Cookies from 'js-cookie'
 
 var router =  new Router({
     routes:[
@@ -13,7 +13,6 @@ var router =  new Router({
     {
         path:'/',
         component:resolve=>require(['@/components/Index'],resolve),
-        redirect:'/loading',
     },
 
     {
@@ -24,7 +23,7 @@ var router =  new Router({
     {
         path:'/index',
         component:resolve=>require(['@/components/Nav'],resolve),
-        redirect:'/register',
+        redirect:'/message',
         children:[{
             path:'/message',
             component:resolve=>require(['@/components/Msg/message'],resolve),
@@ -54,14 +53,14 @@ var router =  new Router({
         },
     }]
 })
-// router.beforeEach((to, from, next) => {
-//     const openID = getItem('openids')
-//     if (to.meta.requireAuth !== true) {
-//         if (openID) {
-//             router.push('register')
-//         }
-//     }
-//     next()
-// })
+router.beforeEach((to, from, next) => {
+    const openID = Cookies.get('OpenID');
+    if (to.meta.requireAuth == true) {
+        if(openID == null || openID == null || openID == "") {
+            router.push('/')
+        }
+    }
+    next()
+})
   
 export default router

@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-// import {deleteItem,setItem,getItem} from '../components/Common/common.js'
+import Cookies from 'js-cookie'
 import { get } from 'http';
 export default{
     data(){
@@ -13,57 +13,13 @@ export default{
         }
     },
     methods:{
-    //跳转
-        Load(){
-            let url = this.$store.state.url;
-            let params = JSON.stringify({
-                "id":14,
-                "method":"/MainSystem/Q3ZhangYiYuan/Rpcs/MemberRpc/Load",
-                "params":[this.$store.state.webUrl+'']
-            })
-            axios.post(url,params).then(function(res){
-                let url = res.result
-                console.log(url);
-                
-            })
-        },
-    //会员验证
-        IsVip(){
-            let url = this.$store.state.url;
-            let params = JSON.stringify({
-                "id":14,
-                "method":"/MainSystem/Q3ZhangYiYuan/Rpcs/WeixinMPRpc/GetWeixinAuthUrl",
-                "params":[this.$store.state.webUrl+'']
-            })
-            axios.post(url,params).then(function(res){
-                let url = res.result
-                console.log(url);
-                
-            })
+        getCookie(){
+            let openid = Cookies.get('OpenID');
         }
     },
     mounted(){
-        // var redirect_url = location.href;
-        // var index=redirect_url.lastIndexOf("?");
-        // redirect_url=redirect_url.substring(index+1,redirect_url.length);//截取url地址中\?之前地址
-        // var error = redirect_url.split("&");
-
-
-
-        // //获取openid
-        // let openID = getItem('openid');
-        // if(openID !== "" || openID !== null){
-        //     //会员验证
-        //     IsVip()
-        // }else{
-        //     Load(openID)
-        // }
-        // //判断用户身份
-        
-        // this.url = error;
-        // var err = error[0].split("=");//查看是否是跳转链接
-        //    // 判断用户是否已经登录
-        // this.jump(date);
+        this.getCookie()
+        console.log(location.href,666)
     }
 }    
 </script>

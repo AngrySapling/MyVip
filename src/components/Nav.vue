@@ -61,5 +61,7 @@ export default {
   height: 1rem !important;
   line-height: 1rem !important;
 }
-
+.weui-tabbar{
+  position: fixed !important;
+}
 </style>

@@ -2,44 +2,40 @@
     <div id="register">
         <div class="reg_top">
             <span class="top_left"></span>
-            <p>登录</p>
+            <p>绑定会员</p>
         </div>
         <div class="phone">
-            <p>手机验证登录</p>
+            <p>手机绑定登录</p>
             <ul class="form">
                 <li>
                     <span>手机号</span>
-                    <input type="number" placeholder="请输入手机号">
-                </li>
-                <li>
-                    <span>验证码</span>
-                    <input type="number" placeholder="请输入验证码" style="width:30%;">
-                    <span style="width:30%;background:#ccc;">获取验证码</span>
+                    <input type="number" placeholder="请输入手机号" v-model="phone">
                 </li>
             </ul>
         </div>
-        <button class="reg_btn">登录</button>
+        <button class="reg_btn" @click="IsLogin()">绑定</button>
     </div>    
 </template>
 <script>
+import Cookies from 'js-cookie'
 export default {
     data(){
         return{
-
+            phone:''
         }
     },
     methods:{
         IsLogin(){
+            let openID = Cookies.get('OpenID');
+            let phones = this.phone.toString()
             let url = this.$store.state.url;
             let params = JSON.stringify({
-                "id":14,
+                "id":17,
                 "method":"/MainSystem/Q3ZhangYiYuan/Rpcs/MemberRpc/Bind",
-                "params":[this.$store.state.webUrl+'']
+                "params":[openID,phones]
             })
-            axios.post(url,params).then(function(res){
-                let url = res.result
-                console.log(url);
-                
+            this.axios.post(url,params).then(function(res){
+                console.log(res);
             })
         }
     },

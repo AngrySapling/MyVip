@@ -14,7 +14,9 @@ Vue.use(Vuex);
 var q3Url = "";
 var webUrl = "";
 if(process.env.NODE_ENV !== 'production'){//判断是否是生产模式
-  q3Url="http://test.bw168.net/";
+  // q3Url="http://test.bw168.net/";
+  q3Url="http://zyy.bwsoft.net/zyywx"
+  // q3Url="http://zyy.bw168.net/zyywx/"
   webUrl ="http://localhost:8080/#";
 }else{
   var index=location.href.indexOf("/zyywx");
@@ -28,7 +30,8 @@ const state = {
 var store = new Vuex.Store({
   state
 })
-
+import {isDate_repalce} from './components/Common/common'
+Vue.prototype.isDate_repalce = isDate_repalce;//获取时间格式
 new Vue({
   el: '#app',
   router,
