@@ -2,23 +2,24 @@
     <scroller lock-x height="100vh" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
         <ul class="box2 myorder">
                 <li v-for="(item,index) in orderList" :key="index">
-                <div><span>单号</span><span>{{item.Member_ID}}</span></div>
-                <div><span>交易门店</span><span>{{item.Customer_Name}}</span></div>
-                <div><span>金额</span><span>¥{{item.Money}}</span></div>
-                <div><span>交易日期</span><span>{{item.Time}}</span></div>
+                <div class="form1"><span class="sp1">单号</span><span>{{item.Member_ID}}</span></div>
+                <div class="form2"><span class="sp1">交易门店</span><span>{{item.Customer_Name}}</span></div>
+                <div class="form1"><span class="sp1">金额</span><span>¥{{item.Money}}</span></div>
+                <div class="form2"><span class="sp1">交易日期</span><span>{{item.Time}}</span></div>
                 </li>
-                <li style="height:50px;margin:0;padding:0;background:none;"></li>
-            <load-more tip="loading"></load-more>
+            <load-more tip="loading" v-if="isShow"></load-more>
+            <li style="height:50px;margin:0;padding:0;background:none;"></li>
         </ul>
     </scroller>
 </template>
 <script>
 import Cookies from 'js-cookie'
-import { XInput,Scroller } from 'vux'
+import { XInput,Scroller,LoadMore } from 'vux'
     export default{
         components: {
             XInput,
-            Scroller
+            Scroller,
+            LoadMore
         },
         data(){
             return{
@@ -26,6 +27,7 @@ import { XInput,Scroller } from 'vux'
                 count:10,
                 PageIndex:0,
                 onFetching:false,
+                isShow:false,
             }
         },
         methods:{
@@ -35,11 +37,13 @@ import { XInput,Scroller } from 'vux'
                 } else {
                     this.onFetching = true
                     this.PageIndex++
+                    this.isShow = true;
                     console.log(this.PageIndex,"Page")
                     this.getMessage(this.PageIndex)
                 }
             },
             getMessage(PageIndex){
+                this.isShow = true;
                 let openID = Cookies.get('OpenID');
                 let _this = this
                 let url = this.$store.state.url;
@@ -55,6 +59,9 @@ import { XInput,Scroller } from 'vux'
                     }]
                 })
                 this.axios.post(url,params).then(function(res){
+                    if(res.error){
+                        return
+                    }
                     let data = res.data.result.Data.rows;
                     if(data !== undefined){
                         data.forEach((res)=>{
@@ -74,10 +81,16 @@ import { XInput,Scroller } from 'vux'
                             })
                         })
                         if(PageIndex !== 0 || data.length === _this.count ){
+                            this.isShow = false;
                             _this.$nextTick(() => {
                                 _this.$refs.scrollerBottom.reset()
                             })
                             _this.onFetching = false
+                        }else{
+                            setTimeout(function(){
+                                console.log(321)
+                                _this.isShow = false;
+                            },1000)
                         }
                     }
                 })
@@ -104,15 +117,23 @@ import { XInput,Scroller } from 'vux'
     .myorder li div{
         font-size: 0.28rem;
         padding: 0.2rem 0;
-        width: 50%;
         float: left;
+        text-align: left;
+    }
+    .myorder li .form1{
+        width: 35%;
+    }
+    .myorder li .form2{
+        width: 65%;
     }
     .myorder li div span{
         display: inline-block;
-        width: 50%;
         text-align: center;
         height: 0.5rem;
         line-height: 0.5rem;
+    }
+    .myorder li div .sp1{
+        padding: 0 0.15rem;
     }
     .myorder li div span:nth-child(2n){
         text-align: left !important;

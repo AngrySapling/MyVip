@@ -45,7 +45,8 @@ export default {
 #mypng{
   height: 100vh;
   width: 100%;
-  background: url('../assets/vipbg.png') no-repeat;
+  /* background: url('../assets/vipbg.png') no-repeat; */
+  background: #dddddd;
   background-size: 100% 100%;
 }
 .vip_active{

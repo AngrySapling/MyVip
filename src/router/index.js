@@ -23,6 +23,9 @@ var router =  new Router({
     {
         path:'/index',
         component:resolve=>require(['@/components/Nav'],resolve),
+        meta:{
+            requireAuth:true,//登录拦截
+        },
         redirect:'/message',
         children:[{
             path:'/message',
@@ -54,9 +57,10 @@ var router =  new Router({
     }]
 })
 router.beforeEach((to, from, next) => {
+    console.log(to)
     const openID = Cookies.get('OpenID');
     if (to.meta.requireAuth == true) {
-        if(openID == null || openID == null || openID == "") {
+        if(openID == null || openID == undefined) {
             router.push('/')
         }
     }

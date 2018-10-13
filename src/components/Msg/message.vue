@@ -30,7 +30,7 @@ import Cookies from 'js-cookie'
                 this.$router.push('/change');
             },
             getMessage(){
-                let openID = Cookies.get('OpenID');
+                let openID = window.localStorage.getItem("OpenID");
                 let _this = this
                 let url = this.$store.state.url;
                 let params = JSON.stringify({
@@ -46,13 +46,15 @@ import Cookies from 'js-cookie'
                     }else{
                         _this.VipMsg = data.result;
                         let BirDate = _this.VipMsg.DateOfBirth
+                        console.log(BirDate !== "undefined")
                         var regexp = /[0-9]*/g;
-                        if(BirDate !== null){
+                        if(BirDate !== null && BirDate !== undefined){
                             var times = BirDate.match(regexp)[6];
+                            var oDate = new Date();
+                            oDate.setTime(times);
+                            _this.VipMsg.DateOfBirth = _this.isDate_repalce(oDate)
                         }
-                        var oDate = new Date();
-                        oDate.setTime(times);
-                        _this.VipMsg.DateOfBirth = _this.isDate_repalce(oDate)
+                        
                     }
                 })
             }
