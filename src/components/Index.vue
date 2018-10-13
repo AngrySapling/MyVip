@@ -20,15 +20,14 @@ export default{
             })
             this.axios.post(url,params).then(function(res){
                 let url = res.data.result
-                // window.location.href=url;//跳转到验证登录链接
+                window.location.href=url;//跳转到验证登录链接
             })
         }
     },
     mounted(){
         let openid = Cookies.get('OpenID');
         console.log(openid)
-        if(openid){
-             console.log(openid,321)
+        if(openid || openid !== ""){
             this.$router.push('/message')
         }else{
             this.IsVip()

@@ -15,11 +15,16 @@ export default{
     methods:{
         getCookie(){
             let openid = Cookies.get('OpenID');
+            if(openid || openid !== ""){
+                this.$router.push('/message')
+            }else{
+                this.$router.push('/')
+            }
         }
     },
     mounted(){
         this.getCookie()
-        console.log(location.href,666)
+        
     }
 }    
 </script>

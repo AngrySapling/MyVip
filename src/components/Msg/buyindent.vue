@@ -1,17 +1,16 @@
 <template>
-    <div id="my">
-        <scroller lock-x height="100%" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
-            <ul class="box2 myorder">
-                 <li v-for="(item,index) in orderList" :key="index">
-                    <div><span>单号</span><span>{{item.Member_ID}}</span></div>
-                    <div><span>交易门店</span><span>{{item.Customer_Name}}</span></div>
-                    <div><span>金额</span><span>{{item.Money}}</span></div>
-                    <div><span>交易日期</span><span>{{item.Time}}</span></div>
-                 </li>
-                <load-more tip="loading"></load-more>
-            </ul>
-        </scroller>
-    </div>
+    <scroller lock-x height="100vh" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
+        <ul class="box2 myorder">
+                <li v-for="(item,index) in orderList" :key="index">
+                <div><span>单号</span><span>{{item.Member_ID}}</span></div>
+                <div><span>交易门店</span><span>{{item.Customer_Name}}</span></div>
+                <div><span>金额</span><span>¥{{item.Money}}</span></div>
+                <div><span>交易日期</span><span>{{item.Time}}</span></div>
+                </li>
+                <li style="height:50px;margin:0;padding:0;background:none;"></li>
+            <load-more tip="loading"></load-more>
+        </ul>
+    </scroller>
 </template>
 <script>
 import Cookies from 'js-cookie'
@@ -41,7 +40,6 @@ import { XInput,Scroller } from 'vux'
                 }
             },
             getMessage(PageIndex){
-                console.log(PageIndex,"Page1")
                 let openID = Cookies.get('OpenID');
                 let _this = this
                 let url = this.$store.state.url;
@@ -58,28 +56,29 @@ import { XInput,Scroller } from 'vux'
                 })
                 this.axios.post(url,params).then(function(res){
                     let data = res.data.result.Data.rows;
-                    data.forEach((res)=>{
-                        var regexp = /[0-9]*/g;
-                        if(res[4] !== null){
-                            var times = res[4].match(regexp)[6];
+                    if(data !== undefined){
+                        data.forEach((res)=>{
+                            var regexp = /[0-9]*/g;
+                            if(res[4] !== null){
+                                var times = res[4].match(regexp)[6];
+                            }
+                            var oDate = new Date();
+                            oDate.setTime(times);
+                            res[4] = _this.isDate_repalce(oDate);
+                            _this.orderList.push({
+                                "Member_ID":res[0],
+                                "Customer_Name":res[1],
+                                "Customer_ID":res[2],
+                                "Money":res[3],
+                                "Time":res[4]
+                            })
+                        })
+                        if(PageIndex !== 0 || data.length === _this.count ){
+                            _this.$nextTick(() => {
+                                _this.$refs.scrollerBottom.reset()
+                            })
+                            _this.onFetching = false
                         }
-                        var oDate = new Date();
-                        oDate.setTime(times);
-                        res[4] = _this.isDate_repalce(oDate);
-                        _this.orderList.push({
-                            "Member_ID":res[0],
-                            "Customer_Name":res[1],
-                            "Customer_ID":res[2],
-                            "Money":res[3],
-                            "Time":res[4]
-                        })
-                    })
-                    if(PageIndex !== 0){
-                        console.log(PageIndex,"Page2")
-                        _this.$nextTick(() => {
-                            _this.$refs.scrollerBottom.reset()
-                        })
-                        _this.onFetching = false
                     }
                 })
             }
@@ -91,15 +90,10 @@ import { XInput,Scroller } from 'vux'
 </script>
 
 <style>
-    #my{
-        overflow: hidden;
-        height: calc(100vh -50px);
-        padding: 0 0.2rem 0;
+    .myorder{
+        padding: 0.4rem  0.4rem 0;
     }
-    #my .myorder{
-        padding: 0.4rem  0.2rem 0;
-    }
-    #my .myorder li{
+    .myorder li{
         list-style: none;
         padding: 0.2rem 0;
         margin-bottom: 0.2rem;
@@ -107,20 +101,20 @@ import { XInput,Scroller } from 'vux'
         overflow: hidden;
         border-radius: 0.2rem;
     }
-    #my .myorder li div{
+    .myorder li div{
         font-size: 0.28rem;
         padding: 0.2rem 0;
         width: 50%;
         float: left;
     }
-    #my .myorder li div span{
+    .myorder li div span{
         display: inline-block;
         width: 50%;
         text-align: center;
         height: 0.5rem;
         line-height: 0.5rem;
     }
-    #my .myorder li div span:nth-child(2n){
+    .myorder li div span:nth-child(2n){
         text-align: left !important;
     }
 </style>

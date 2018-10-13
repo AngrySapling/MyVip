@@ -12,6 +12,7 @@
         </tabbar-item>
       </div>
     </tabbar>
+    
     <router-view></router-view>
   </div>
 </template>
