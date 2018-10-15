@@ -15,7 +15,7 @@
         </div>
         <button class="reg_btn" @click="IsLogin()">绑定</button>
         <div v-transfer-dom>
-            <alert v-model="show" :title="'提示'" @on-show="onShow" @on-hide="onHide"> {{values}}</alert>
+            <alert v-model="show" :title="'提示'"> {{values}}</alert>
         </div>
     </div>    
 </template>
@@ -37,12 +37,6 @@ export default {
         }
     },
     methods:{
-        onHide () {
-            console.log('on hide')
-        },
-        onShow () {
-            console.log('on show')
-            },
         back(){
             this.$router.push('/')
         },
@@ -67,16 +61,14 @@ export default {
                 let data = res.data;
                 if(data.error.code == 500){
                     _this.show = true;
-                    _this.values = "该微信号已绑定会员"
-                    return
+                    _this.values = "该微信号已绑定会员";
+                }else{
+                    this.$router.push('/')
                 }
-                this.$router.push('/message')
+                
             })
         }
     },
-    mounted(){
-        
-    }
 }
 </script>
 <style>

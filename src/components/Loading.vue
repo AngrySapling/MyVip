@@ -15,7 +15,6 @@ export default{
     methods:{
         getCookie(){
             let openid = Cookies.get('OpenID');
-            window.localStorage.setItem("OpenID",openid);
             if(openid !== undefined){
                 this.$router.push('/message')
             }else{

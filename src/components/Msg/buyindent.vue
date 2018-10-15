@@ -59,7 +59,8 @@ import { XInput,Scroller,LoadMore } from 'vux'
                     }]
                 })
                 this.axios.post(url,params).then(function(res){
-                    if(res.error){
+                    if(res.data.error){
+                        _this.isShow = false;
                         return
                     }
                     let data = res.data.result.Data.rows;
@@ -80,7 +81,9 @@ import { XInput,Scroller,LoadMore } from 'vux'
                                 "Time":res[4]
                             })
                         })
+                        console.log(PageIndex)
                         if(PageIndex !== 0 || data.length === _this.count ){
+                            console.log(321)
                             this.isShow = false;
                             _this.$nextTick(() => {
                                 _this.$refs.scrollerBottom.reset()

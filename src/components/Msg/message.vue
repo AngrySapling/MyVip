@@ -30,7 +30,7 @@ import Cookies from 'js-cookie'
                 this.$router.push('/change');
             },
             getMessage(){
-                let openID = window.localStorage.getItem("OpenID");
+                let openID = Cookies.get('OpenID');
                 let _this = this
                 let url = this.$store.state.url;
                 let params = JSON.stringify({
@@ -39,7 +39,6 @@ import Cookies from 'js-cookie'
                     "params":[openID]
                 })
                 this.axios.post(url,params).then(function(res){
-                    console.log(res,_this.a)
                     let data = res.data;
                     if(data.error){
                         _this.$router.push('/register')
