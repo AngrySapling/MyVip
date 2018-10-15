@@ -21,12 +21,11 @@ export default{
             this.axios.post(url,params).then(function(res){
                 let url = res.data.result
                 let openid = Cookies.get('OpenID');
-                window.location.href=url;//跳转到验证登录链接
+                // window.location.href=url;//跳转到验证登录链接
             })
         }
     },
     mounted(){
-        console.log(666,6666666)
         let openid = Cookies.get('OpenID');
         if(openid !== undefined){
             this.$router.push('/message')

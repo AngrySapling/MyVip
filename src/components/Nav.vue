@@ -19,7 +19,6 @@
 
 <script>
 import { Tabbar, TabbarItem, } from 'vux'
-// import {getItem} from '../components/Common/common.js'
 export default {
   components: {
     Tabbar,
@@ -46,7 +45,7 @@ export default {
   height: 100vh;
   width: 100%;
   /* background: url('../assets/vipbg.png') no-repeat; */
-  background: #dddddd;
+  background: #e4e7ee;
   background-size: 100% 100%;
 }
 .vip_active{

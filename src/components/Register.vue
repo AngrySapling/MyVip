@@ -15,7 +15,7 @@
         </div>
         <button class="reg_btn" @click="IsLogin()">绑定</button>
         <div v-transfer-dom>
-            <alert v-model="show" :title="'提示'"> {{values}}</alert>
+            <alert v-model="show" :title="'提示'">{{values}}</alert>
         </div>
     </div>    
 </template>
@@ -146,7 +146,7 @@ export default {
         border-radius: 0.2rem;
     }
     .weui-dialog__hd{
-        padding:0;
+        padding:0 !important;
     }
 </style>
 

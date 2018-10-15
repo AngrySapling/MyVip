@@ -6,42 +6,50 @@ Vue.use(Vuex)
 
 //引入缓存
 import Cookies from 'js-cookie'
+const Index = r => require.ensure([], () => r(require('@/components/Index')), 'Index');//首页
+const Loading = r => require.ensure([],()=> r(require('@/components/Loading')),'Loading');//加载页
+const Register = r=> require.ensure([],()=> r(require('@/components/Register')),'Register');//绑定页
+const Nav = r=> require.ensure([],()=>r(require('@/components/Nav')),'Nav');//Nav页
+const Message  = r => require.ensure([],()=>r(require('@/components/Msg/message')),'Message');//个人信息
+const Buyindent = r => require.ensure([],()=>r(require('@/components/Msg/buyindent')),'Buyindent');//我的订单
+const ChangeMy = r => require.ensure([],()=>r(require('@/components/Msg/changeMy')),'ChangeMy');//信息修改
+
 
 var router =  new Router({
     routes:[
         //首页
     {
         path:'/',
-        component:resolve=>require(['@/components/Index'],resolve),
+        component:Index
     },
 
     {
         path:'/loading',
-        component:resolve=>require(['@/components/Loading'],resolve),
+        component:Loading,
     },
         //会员首页
     {
         path:'/index',
-        component:resolve=>require(['@/components/Nav'],resolve),
+        component:Nav,
         meta:{
             requireAuth:true,//登录拦截
         },
         redirect:'/message',
         children:[{
             path:'/message',
-            component:resolve=>require(['@/components/Msg/message'],resolve),
+            component:Message,
             meta:{
                 requireAuth:true,//登录拦截
             },
         },{
             path:'/buyindent',
-            component:resolve=>require(['@/components/Msg/buyindent'],resolve),
+            component:Buyindent,
             meta:{
                 requireAuth:true,//登录拦截
             },
         },{
             path:'/change',
-            component:resolve=>require(['@/components/Msg/changeMy'],resolve),
+            component:ChangeMy,
             meta:{
                 requireAuth:true,//登录拦截
             },
@@ -50,14 +58,13 @@ var router =  new Router({
         //注册登录页
     {
         path:'/register',
-        component:resolve=>require(['@/components/Register'],resolve),
+        component:Register,
         meta:{
             requireAuth:false,//登录拦截
         },
     }]
 })
 router.beforeEach((to, from, next) => {
-    console.log(to)
     const openID = Cookies.get('OpenID');
     if (to.meta.requireAuth == true) {
         if(openID == null || openID == undefined) {

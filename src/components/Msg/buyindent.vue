@@ -1,14 +1,14 @@
 <template>
     <scroller lock-x height="100vh" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
-        <ul class="box2 myorder">
+        <ul class="box2 myorder" style="position:relative;">
                 <li v-for="(item,index) in orderList" :key="index">
                 <div class="form1"><span class="sp1">单号</span><span>{{item.Member_ID}}</span></div>
                 <div class="form2"><span class="sp1">交易门店</span><span>{{item.Customer_Name}}</span></div>
                 <div class="form1"><span class="sp1">金额</span><span>¥{{item.Money}}</span></div>
                 <div class="form2"><span class="sp1">交易日期</span><span>{{item.Time}}</span></div>
                 </li>
+                <li v-if="orderList.length === 0" style="font-size:0.36rem;height:0.8rem;line-height:0.8rem;">暂无任何订单....</li>
             <load-more tip="loading" v-if="isShow"></load-more>
-            <li style="height:50px;margin:0;padding:0;background:none;"></li>
         </ul>
     </scroller>
 </template>
@@ -45,7 +45,6 @@ import { XInput,Scroller,LoadMore } from 'vux'
             getMessage(PageIndex){
                 this.isShow = true;
                 let openID = Cookies.get('OpenID');
-                let _this = this
                 let url = this.$store.state.url;
                 let params = JSON.stringify({
                     "id":14,
@@ -58,6 +57,12 @@ import { XInput,Scroller,LoadMore } from 'vux'
                         "PageIndex":this.PageIndex, 
                     }]
                 })
+                //api
+                this.GetAxios(url,params,this,PageIndex)
+                
+            },
+            //获取订单信息
+            GetAxios(url,params,_this,PageIndex){
                 this.axios.post(url,params).then(function(res){
                     if(res.data.error){
                         _this.isShow = false;
@@ -81,20 +86,17 @@ import { XInput,Scroller,LoadMore } from 'vux'
                                 "Time":res[4]
                             })
                         })
-                        console.log(PageIndex)
-                        if(PageIndex !== 0 || data.length === _this.count ){
-                            console.log(321)
+                        if(PageIndex !== 0 && data.length === _this.count ){
                             this.isShow = false;
                             _this.$nextTick(() => {
                                 _this.$refs.scrollerBottom.reset()
                             })
                             _this.onFetching = false
                         }else{
-                            setTimeout(function(){
-                                console.log(321)
-                                _this.isShow = false;
-                            },1000)
+                            _this.isShow = false;
                         }
+                    }else{
+                        _this.isShow = false;
                     }
                 })
             }
@@ -113,7 +115,8 @@ import { XInput,Scroller,LoadMore } from 'vux'
         list-style: none;
         padding: 0.2rem 0;
         margin-bottom: 0.2rem;
-        background: rgba(103,160,100,0.5);
+        /* background: rgba(103,160,100,0.5); */
+        background: #fff;
         overflow: hidden;
         border-radius: 0.2rem;
     }
@@ -140,5 +143,15 @@ import { XInput,Scroller,LoadMore } from 'vux'
     }
     .myorder li div span:nth-child(2n){
         text-align: left !important;
+    }
+    .noneList{
+        position:absolute;
+        top:50%;
+        margin-top:-0.5rem;
+        height:1rem;
+        line-height:1rem;
+        width:80%;
+        margin:0 auto;
+        font-size:0.3rem;
     }
 </style>

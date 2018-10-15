@@ -53,7 +53,7 @@ import { XInput, XAddress,ChinaAddressData } from 'vux'
     }
     #mychange ul{
         margin-top: 0.5rem;
-        background: rgba(103,160,100,0.4);
+        background:#fff;
         border-radius: 0.2rem;
     }
     #mychange li{

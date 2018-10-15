@@ -72,10 +72,10 @@ import Cookies from 'js-cookie'
     .myContent,.myMessage{
         overflow: hidden;
         margin:0.4rem;
-        background: #e9e9e9;
         border-radius: 0.2rem;
         padding: 0.2rem 0.2rem;
-        background: rgba(103,160,100,0.5);
+        background:#ffffff;
+        border:2px solid #ffffff;
     }
     .myMessage{
         margin-top: 1rem !important;
@@ -85,7 +85,7 @@ import Cookies from 'js-cookie'
         overflow: hidden;
         height: 0.5rem;
         line-height: 0.5rem;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 2px solid #ffffff;
     }
     .myContent li span,.myMessage li span{
         float: left;
