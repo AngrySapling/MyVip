@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 //引入缓存
 import Cookies from 'js-cookie'
+import store from '../vuex/store';
 const Index = r => require.ensure([], () => r(require('@/components/Index')), 'Index');//首页
 const Loading = r => require.ensure([],()=> r(require('@/components/Loading')),'Loading');//加载页
 const Register = r=> require.ensure([],()=> r(require('@/components/Register')),'Register');//绑定页
@@ -34,26 +35,28 @@ var router =  new Router({
         meta:{
             requireAuth:true,//登录拦截
         },
-        redirect:'/message',
+        redirect:'/index/message',
         children:[{
-            path:'/message',
+            path:'message',
             component:Message,
             meta:{
                 requireAuth:true,//登录拦截
             },
         },{
-            path:'/buyindent',
+            path:'buyindent',
             component:Buyindent,
             meta:{
                 requireAuth:true,//登录拦截
             },
-        },{
-            path:'/change',
-            component:ChangeMy,
-            meta:{
-                requireAuth:true,//登录拦截
-            },
         }]
+    },
+        //修改信息页面
+    {
+        path:'/index/change',
+        component:ChangeMy,
+        meta:{
+            requireAuth:true,//登录拦截
+        },
     },
         //注册登录页
     {
@@ -65,6 +68,11 @@ var router =  new Router({
     }]
 })
 router.beforeEach((to, from, next) => {
+    if(to.path === '/index/message'){
+        store.state.pathID = 0
+    }else if(to.path === '/index/buyindent'){
+        store.state.pathID = 1
+    }
     const openID = Cookies.get('OpenID');
     if (to.meta.requireAuth == true) {
         if(openID == null || openID == undefined) {

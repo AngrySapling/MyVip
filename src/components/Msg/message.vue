@@ -27,7 +27,7 @@ import Cookies from 'js-cookie'
         },
         methods:{
             push(){
-                this.$router.push('/change');
+                this.$router.push('/index/change');
             },
             getMessage(){
                 let openID = Cookies.get('OpenID');
@@ -45,7 +45,6 @@ import Cookies from 'js-cookie'
                     }else{
                         _this.VipMsg = data.result;
                         let BirDate = _this.VipMsg.DateOfBirth
-                        console.log(BirDate !== "undefined")
                         var regexp = /[0-9]*/g;
                         if(BirDate !== null && BirDate !== undefined){
                             var times = BirDate.match(regexp)[6];

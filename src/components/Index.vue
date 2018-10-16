@@ -28,7 +28,7 @@ export default{
     mounted(){
         let openid = Cookies.get('OpenID');
         if(openid !== undefined){
-            this.$router.push('/message')
+            this.$router.push('/index/message')
         }else{
             this.IsVip()
         }

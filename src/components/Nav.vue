@@ -1,14 +1,14 @@
 <template>
   <div id="mypng">
     <tabbar>
-      <div @click="push(0)" style="width:50%;" :class="{vip_active:isClass === 0}">
-        <tabbar-item link="/message" >
-            <span slot="label" style="font-size:0.32rem;line-height:1rem;" :class="{vip_active1:isClass === 0}">用户信息</span>
+      <div  style="width:50%;" :class="{vip_active:pathID === 0}">
+        <tabbar-item link="/index/message" >
+            <span slot="label" style="font-size:0.32rem;line-height:1rem;" :class="{vip_active1:pathID === 0}">用户信息</span>
         </tabbar-item>
       </div>
-      <div @click="push(1)" style="width:50%;" :class="{vip_active:isClass === 1}">
-        <tabbar-item  link="/buyindent"  >
-            <span slot="label" style="font-size:0.32rem;line-height:1rem;" :class="{vip_active1:isClass === 1}">交易记录</span>
+      <div style="width:50%;" :class="{vip_active:pathID === 1}">
+        <tabbar-item  link="/index/buyindent"  >
+            <span slot="label" style="font-size:0.32rem;line-height:1rem;" :class="{vip_active1:pathID === 1}">交易记录</span>
         </tabbar-item>
       </div>
     </tabbar>
@@ -19,6 +19,7 @@
 
 <script>
 import { Tabbar, TabbarItem, } from 'vux'
+import {mapState} from 'vuex'
 export default {
   components: {
     Tabbar,
@@ -29,14 +30,16 @@ export default {
       isClass:0,
     }
   },
+  computed:{
+    ...mapState(['pathID'])
+  },
   methods:{
-    push(i){
-      this.isClass = i;
-    },
+    // push(i){
+    //   this.isClass = i;
+    // },
   },
   mounted(){
-    this.$router.push('/message');
-
+    this.$router.push('/index/message');
   }
 }
 </script>
