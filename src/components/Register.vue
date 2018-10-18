@@ -63,9 +63,8 @@ export default {
                     _this.show = true;
                     _this.values = "该微信号已绑定会员";
                 }else{
-                    this.$router.push('/')
+                    _this.$router.push('/')
                 }
-                
             })
         }
     },

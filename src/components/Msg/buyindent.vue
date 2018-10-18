@@ -59,7 +59,6 @@ import { XInput,Scroller,LoadMore } from 'vux'
                 })
                 //api
                 this.GetAxios(url,params,this,PageIndex)
-                
             },
             //获取订单信息
             GetAxios(url,params,_this,PageIndex){

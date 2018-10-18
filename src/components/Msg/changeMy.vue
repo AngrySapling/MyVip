@@ -1,43 +1,49 @@
 <template>
-<div id="mychange">
-    <ul>
-        <li>
-            <p class="weui-cell__hd">姓名</p>
-			<input class="inp" type="text" placeholder="请输入名字" v-model="name"/>
-        </li>
-        <li>
-            <p class="weui-cell__hd">性别</p>
-            <div class="inp">
-                <input  type="radio" name="sex"  value="男" v-model="sex"/>男
-			    <input style="margin-left:0.2rem;"  name="sex" value="女" type="radio" v-model="sex"/>女
-            </div>
-			
-        </li>
-        <li>
-            <p class="weui-cell__hd">出生日期</p>
-            <x-button @click.native="showPopup = true" type="primary" > {{value2}} </x-button>
-        </li>
-        <li>
-            <x-address title="地址选择" v-model="addressValue" raw-value :list="addressData" value-text-align="left" label-align="justify"></x-address>
-        </li>
-    </ul>
-    <div class="btn">
-        <button  style="float:left;" @click="upDate()">保存</button>
-        <button  style="float:right;">取消</button>
-    </div>
-    <div v-transfer-dom>
-      <popup v-model="showPopup">
-        <datetime-view v-model="value2" start-date="1901-01-01" end-date="2100-01-01"></datetime-view>
-      </popup>
+<div style=" height: 100vh;">
+    <x-header :left-options="{backText: ''}" style="background:#439057;">会员信息修改</x-header>
+    <div id="mychange">
+        
+        <ul>
+            <li>
+                <p class="weui-cell__hd">姓名</p>
+                <input class="inp" type="text" placeholder="请输入名字" v-model="name"/>
+            </li>
+            <li>
+                <p class="weui-cell__hd">性别</p>
+                <div class="inp">
+                    <input  type="radio" name="sex"  value="男" v-model="sex"/>男
+                    <input style="margin-left:0.2rem;"  name="sex" value="女" type="radio" v-model="sex"/>女
+                </div>
+                
+            </li>
+            <li>
+                <p class="weui-cell__hd">出生日期</p>
+                <x-button @click.native="showPopup = true" type="primary" > {{value2}} </x-button>
+            </li>
+            <li>
+                <x-address title="地址选择" v-model="addressValue" raw-value :list="addressData" value-text-align="left" label-align="justify"></x-address>
+            </li>
+        </ul>
+        <div class="btn">
+            <button  style="float:left;" @click="upDate()">保存</button>
+            <button  style="float:right;">取消</button>
+        </div>
+        <div v-transfer-dom>
+        <popup v-model="showPopup">
+            <datetime-view v-model="value2" start-date="1901-01-01" end-date="2100-01-01"></datetime-view>
+        </popup>
+        </div>
     </div>
 </div>
+
     
 </template>
 <script>
-import { XInput, XAddress,ChinaAddressData,DatetimeView, XButton, Popup, TransferDom } from 'vux'
+import { XInput, XAddress,ChinaAddressData,DatetimeView, XButton, Popup, TransferDom ,XHeader} from 'vux'
 import Cookies from 'js-cookie'
     export default{
         components:{
+            XHeader,
             XInput,
             XAddress,
             DatetimeView,
@@ -94,7 +100,8 @@ import Cookies from 'js-cookie'
                 this.value2 = this.isDate_repalce(oDate).toString();
             }
         },
-        created(){
+        created
+        (){
             this.getMessage()
             this.getDate()
         }
@@ -103,10 +110,9 @@ import Cookies from 'js-cookie'
 <style >
     #mychange{
         font-size: 0.3rem;
-        padding:0 0.4rem;
-        height: 100vh;
         overflow: hidden;
         background: #e4e7ee;
+        padding:0 0.4rem;
     }
     #mychange ul{
         margin-top: 0.5rem;

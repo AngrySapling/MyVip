@@ -68,6 +68,9 @@ import Cookies from 'js-cookie'
         height: 100vh;
         overflow: hidden;
     }
+    #my li{
+        border-bottom: 1px solid #cccccc;
+    }
     .myContent,.myMessage{
         overflow: hidden;
         margin:0.4rem;
