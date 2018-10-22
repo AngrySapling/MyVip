@@ -35,4 +35,11 @@ ul{
 a{
     text-decoration: none;
 }
+@media screen and (min-width: 500px) {
+    html,body {
+        font-size: 90px !important;
+        min-height: 100vh !important;
+        margin: 0;
+    }
+}
 </style>

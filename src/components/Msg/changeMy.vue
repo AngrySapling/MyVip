@@ -1,5 +1,5 @@
 <template>
-<div style=" height: 100vh;">
+<div style="height: 100vh;background:#e4e7ee;">
     <x-header :left-options="{backText: ''}" style="background:#439057;">会员信息修改</x-header>
     <div id="mychange">
         
@@ -90,8 +90,7 @@ import Cookies from 'js-cookie'
                             var oDate = new Date();
                             oDate.setTime(times);
                             _this.VipMsg.DateOfBirth = _this.isDate_repalce(oDate)
-                        }
-                        
+                        } 
                     }
                 })
             },
@@ -111,7 +110,6 @@ import Cookies from 'js-cookie'
     #mychange{
         font-size: 0.3rem;
         overflow: hidden;
-        background: #e4e7ee;
         padding:0 0.4rem;
     }
     #mychange ul{
