@@ -1,16 +1,20 @@
 <template>
-    <scroller lock-x height="100vh" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
-        <ul class="box2 myorder" style="position:relative;">
-                <li v-for="(item,index) in orderList" :key="index">
-                <div class="form1"><span class="sp1">单号</span><span>{{item.Member_ID}}</span></div>
-                <div class="form2"><span class="sp1">交易门店</span><span>{{item.Customer_Name}}</span></div>
-                <div class="form1"><span class="sp1">金额</span><span>¥{{item.Money}}</span></div>
-                <div class="form2"><span class="sp1">交易日期</span><span>{{item.Time}}</span></div>
-                </li>
-                <li v-if="orderList.length === 0" style="font-size:0.36rem;height:0.8rem;line-height:0.8rem;">暂无任何订单....</li>
-            <load-more tip="loading" v-if="isShow"></load-more>
-        </ul>
-    </scroller>
+    <div id="buyindent">
+        <scroller height="100%" lock-x @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
+            <ul class="box2 myorder" style="position:relative;">
+                    <li v-for="(item,index) in orderList" :key="index">
+                    <div class="form1"><span class="sp1">单号</span><span>{{item.Member_ID}}</span></div>
+                    <div class="form2"><span class="sp1">交易门店</span><span>{{item.Customer_Name}}</span></div>
+                    <div class="form1"><span class="sp1">金额</span><span>¥{{item.Money}}</span></div>
+                    <div class="form2"><span class="sp1">交易日期</span><span>{{item.Time}}</span></div>
+                    </li>
+                    <li v-if="orderList.length === 0" style="font-size:0.36rem;height:0.8rem;line-height:0.8rem;">暂无任何订单....</li>
+                    <load-more :show-loading="false" :tip="'暂无更多数据'" background-color="#fbf9fe" v-if="orderList.length !== 0"></load-more>
+                <load-more tip="loading" v-if="isShow"></load-more>
+            </ul>
+        </scroller>
+    </div>
+    
 </template>
 <script>
 import Cookies from 'js-cookie'
@@ -107,6 +111,9 @@ import { XInput,Scroller,LoadMore } from 'vux'
 </script>
 
 <style>
+    #buyindent{
+        height: calc(100vh - 50px) !important;
+    }
     .myorder{
         padding: 0.4rem  0.4rem 0;
     }

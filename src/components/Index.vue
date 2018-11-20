@@ -30,7 +30,7 @@ export default{
         if(openid !== undefined){
             this.$router.push('/index/message')
         }else{
-            this.IsVip()
+            this.IsVip();
         }
         
     },

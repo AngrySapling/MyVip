@@ -1,7 +1,7 @@
 <template>
     <div id="my">
         <ul class="myContent" slot="margin-top:0.8rem;">
-            <li><span>手机号</span><p>{{VipMsg.Code}}</p></li>
+            <li><span>手机号</span><p class="p1">{{VipMsg.Code}}</p><p style="float:right;background:#eee;width:20%;" @click="bindTitle()">解除绑定</p></li>
             <li><span>会员积分</span><p>{{VipMsg.Point}}</p></li>
             <li><span>所属门店</span><p>{{VipMsg.Customer_Name}}</p></li>
         </ul>
@@ -15,17 +15,40 @@
             <li><span>生日</span><p>{{VipMsg.DateOfBirth}}</p></li>
             <li><span>地区</span><p>{{VipMsg.Source}}</p></li>
         </ul>
+        <div v-transfer-dom>
+            <alert v-model="show" :title="title" > {{Message}}</alert>
+        </div>
+        <div v-transfer-dom>
+            <confirm v-model="show1"
+            :title="title"
+            @on-confirm="onConfirm">
+                <p style="text-align:center;">{{msg}}</p>
+            </confirm>
+        </div>
     </div>
 </template>
 <script>
+import {Alert,Confirm} from 'vux'
 import Cookies from 'js-cookie'
     export default{
+        components:{
+            Alert,
+            Confirm
+        },
         data(){
             return{
-                VipMsg:[]
+                msg:"确认解除绑定",
+                VipMsg:[],
+                title:"提示",
+                Message:"",
+                show:false,//弹框提示
+                show1:false,//解绑确认
             }
         },
         methods:{
+            onConfirm (msg) {
+                this.unBind();
+            },
             push(){
                 this.$router.push('/index/change');
             },
@@ -54,6 +77,32 @@ import Cookies from 'js-cookie'
                         }
                         
                     }
+                })
+            },
+            bindTitle(){
+                this.show1 = true;
+            },
+            unBind(){
+                let openID = Cookies.get('OpenID');
+                let url = this.$store.state.url;
+                var _this = this
+                let params = JSON.stringify({
+                    "id":14,
+                    "method":"/MainSystem/Q3ZhangYiYuan/Rpcs/MemberRpc/UnBind",
+                    "params":[openID]
+                })
+                this.axios.post(url,params).then(function(res){
+                    let data = res.data;
+                    if(data.error){
+                        _this.show = true;
+                        _this.Message = data.error.message;
+                        return;
+                    }
+                    console.log(data)
+                    Cookies.remove('OpenID');
+                    _this.show = true;
+                    _this.Message = "解绑成功";
+                    _this.$router.push("/");
                 })
             }
         },
@@ -93,12 +142,18 @@ import Cookies from 'js-cookie'
         float: left;
         width: 30%;
     }
-    .myContent li p,.myMessage li p{
+    .myContent li p,.myMessage li .p1{
+        padding-left:0.2rem; 
+        text-align: left;
+        float: left;
+        width: 40%;
+    }
+    .myMessage p{
         padding-left:0.2rem; 
         text-align: left;
         float: right;
         width: 65%;
-    }
+    };
     #my button{
         border: 1px solid #000;
         border-radius: 0.2rem;
@@ -109,6 +164,9 @@ import Cookies from 'js-cookie'
         float:right;
         background: none;
         font-size: 0.28rem;
+    }
+    #my .weui-dialog__bd {
+        line-height: 40px !important;
     }
 </style>
 
