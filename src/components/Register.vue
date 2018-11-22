@@ -15,11 +15,11 @@
         </div>
         <button class="reg_btn" @click="IsLogin()">绑定</button>
         <div v-transfer-dom>
-            <alert v-model="show" :title="'提示'">{{values}}</alert>
+            <alert v-model="show" :title="title" > {{values}}</alert>
         </div>
     </div>    
 </template>
-<script>
+<script scope>
 import { AlertModule, Alert, TransferDomDirective as TransferDom } from 'vux'
 import Cookies from 'js-cookie'
 export default {
@@ -31,6 +31,7 @@ export default {
     },
     data(){
         return{
+            title:"提示",
             phone:'',
             show: false,
             values:'',
@@ -59,11 +60,11 @@ export default {
             })
             this.axios.post(url,params).then(function(res){
                 let data = res.data;
-                if(data.error.code == 500){
+                if(data.error){
                     _this.show = true;
                     _this.values = "该微信号已绑定会员";
                 }else{
-                    _this.$router.push('/')
+                    _this.$router.push('/');
                 }
             })
         }
@@ -145,7 +146,13 @@ export default {
         border-radius: 0.2rem;
     }
     .weui-dialog__hd{
-        padding:0 !important;
+        padding:15px 0 !important;
+    }
+    .weui-dialog__bd {
+        line-height: 40px !important;
+    }
+    .weui-dialog__title {
+        display: block;
     }
 </style>
 
