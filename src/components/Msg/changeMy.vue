@@ -26,7 +26,7 @@
         </ul>
         <div class="btn">
             <button  style="float:left;" @click="upDate()">保存</button>
-            <button  style="float:right;">取消</button>
+            <button  style="float:right;" @click="back()">返回</button>
         </div>
         <div v-transfer-dom>
         <popup v-model="showPopup">
@@ -70,6 +70,9 @@ export default{
         }
     },
     methods:{
+        back(){
+            this.$router.back();
+        },
         upDate(){
             this.changeMessage();
         },
@@ -95,6 +98,8 @@ export default{
                     if(Address !== null && Address !== undefined){
                         Address = Address.split(" ");
                         _this.addressValue = Address
+                    }else{
+                        _this.addressValue = "北京市 市辖区 东城区"
                     }
                     //日期转变
                     if(BirDate !== null && BirDate !== undefined){
@@ -105,6 +110,9 @@ export default{
                     } else{
                         this.getDate();
                     }
+
+                    //性别
+                   _this.VipMsg.Gender = _this.VipMsg.Gender === undefined?"男":_this.VipMsg.Gender
                 }
             })
         },
@@ -129,6 +137,7 @@ export default{
             this.VipMsg.DateOfBirth = "/Date("+times+" 0800)/";
             let url = this.$store.state.url;
             
+            //性别
             let data = this.VipMsg;
             var _this= this;
             let params = JSON.stringify({
@@ -175,20 +184,20 @@ export default{
     }
     #mychange .weui-btn{
         float: left;
-        width: 65%;
+        width: 70%;
         padding-left: 0.2rem;
         height: 0.5rem;
         line-height: 0.5rem;
         outline: none;
-        border: none;
         text-align: left;
         font-size: 0.28rem;
         background: #fff;
         color: initial;
-        border: none;
+        border:1px solid #ccc;
+        border-radius: 0.1rem;;
     }
     #mychange .weui-cell__hd{
-        width: 30% !important;
+        width: 25% !important;
         float: left;
         height: 0.5rem;
         line-height: 0.5rem;
@@ -196,7 +205,7 @@ export default{
     #mychange .inp input{
         vertical-align:middle;
     }
-    #mychange .inp,.vux-cell-primary{
+    #mychange .inp{
         float: left;
         width: 65%;
         padding-left: 0.2rem;
@@ -208,21 +217,32 @@ export default{
         font-size: 0.28rem;
     }
     .vux-cell-primary{
-        padding-left: 0.2rem !important;
+        float: left;
+        width: 63%;
+        padding:0 0.2rem !important;
         background: #fff  !important;
-        flex: none;
+        flex: none !important;
+        border:1px solid #cccccc;
+        border-radius: 0.1rem;
+        min-height: 0.5rem;
+        line-height: 0.5rem;
+        text-align: left;
+        font-size: 0.28rem;
     }
     .weui-cell{
-        padding: 0.2rem 0 !important;
+        display: block;
+        overflow: hidden;
+        padding: 0 0 0.2rem 0 !important;
 
     }
     .weui-cell__hd{
-        width: 30% !important;
+        width: 25% !important;
         text-align: center;
     }
     .weui-cell__ft{
         display: none;
     }
+    
     .btn{
         margin-top: 3rem;
         padding: 0 .4rem;

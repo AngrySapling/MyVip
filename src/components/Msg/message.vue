@@ -1,19 +1,19 @@
 <template>
     <div id="my">
         <ul class="myContent" slot="margin-top:0.8rem;">
-            <li><span>手机号</span><p class="p1">{{VipMsg.Code}}</p><p style="float:right;background:#eee;width:20%;" @click="bindTitle()">解除绑定</p></li>
+            <li><span>手机号</span><p class="p1">{{VipMsg.Code}}</p><p style="float:right;background:#eee;width:20%;border:1px solid #ddd;" @click="bindTitle()">解除绑定</p></li>
             <li><span>会员积分</span><p>{{VipMsg.Point}}</p></li>
             <li><span>所属门店</span><p>{{VipMsg.Customer_Name}}</p></li>
         </ul>
         <ul class="myMessage">
-            <li>
+            <li class="li">
                 <span>姓名</span>
                 <p style="width:30%;float:left;">{{VipMsg.Name}}</p>
-                <button @click="push()" >完善信息</button>
+                <button @click="push()" style="padding:0.05rem 0.1rem;float:right;">完善信息</button>
             </li>
-            <li><span>性别</span><p>{{VipMsg.Gender}}</p></li>
-            <li><span>生日</span><p>{{VipMsg.DateOfBirth}}</p></li>
-            <li><span>地区</span><p>{{VipMsg.Source}}</p></li>
+            <li class="li"><span>性别</span><p>{{VipMsg.Gender}}</p></li>
+            <li class="li"><span>生日</span><p>{{VipMsg.DateOfBirth}}</p></li>
+            <li class="li1"><span>地区</span><p>{{VipMsg.Source}}</p></li>
         </ul>
         <div v-transfer-dom>
             <alert v-model="show" :title="title" > {{Message}}</alert>
@@ -131,16 +131,23 @@ import Cookies from 'js-cookie'
     .myMessage{
         margin-top: 1rem !important;
     }
-    .myContent li,.myMessage li{
+    .myContent li,.myMessage .li{
         padding:0.2rem 0;
         overflow: hidden;
         height: 0.5rem;
         line-height: 0.5rem;
         border-bottom: 2px solid #ffffff;
     }
+    .myMessage .li1{
+        padding:0.2rem 0;
+        overflow: hidden;
+        min-height: 0.5rem;
+        line-height: 0.5rem;
+        border-bottom: 2px solid #ffffff;
+    }
     .myContent li span,.myMessage li span{
         float: left;
-        width: 30%;
+        width: 25%;
     }
     .myContent li p,.myMessage li .p1{
         padding-left:0.2rem; 
@@ -151,8 +158,8 @@ import Cookies from 'js-cookie'
     .myMessage p{
         padding-left:0.2rem; 
         text-align: left;
-        float: right;
-        width: 65%;
+        float: left;
+        width: 70%;
     };
     #my button{
         border: 1px solid #000;

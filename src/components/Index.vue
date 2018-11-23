@@ -6,12 +6,12 @@ import Cookies from 'js-cookie'
 export default{
     data(){
         return{
+            
         }
     },
     methods:{
         //会员验证
         IsVip(){
-            console.log(this.$store.state.webUrl,666)
             let url = this.$store.state.url;
             let params = JSON.stringify({
                 "id":14,
@@ -19,7 +19,7 @@ export default{
                 "params":[this.$store.state.webUrl+'#/loading',]
             })
             this.axios.post(url,params).then(function(res){
-                let url = res.data.result
+                let url = res.data.result;
                 let openid = Cookies.get('OpenID');
                 window.location.href=url;//跳转到验证登录链接
             })
@@ -28,11 +28,10 @@ export default{
     mounted(){
         let openid = Cookies.get('OpenID');
         if(openid !== undefined){
-            this.$router.push('/index/message')
+            this.$router.push('/index/message');
         }else{
             this.IsVip();
         }
-        
     },
 }
 </script>
