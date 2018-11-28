@@ -59,7 +59,7 @@ import { XInput,Scroller,LoadMore } from 'vux'
             playinvoice(){
                 if(this.isInvoice){
                     let url = this.$store.state.href;
-                    window.location.href =url+'/zyywx/invoice.html';
+                    window.location.href =url+'/zyywx/indent.html';
                 }
             },
             onScrollBottom () {
@@ -171,7 +171,7 @@ import { XInput,Scroller,LoadMore } from 'vux'
     .myorder li  .form .invoice .playinvoice{
         padding: 0 0.2rem;
         background: #ccc;
-        border-radius: 0.2rem;
+        border-radius: 0.1rem;
     }
     .myorder li .form1{
         width: 35%;
