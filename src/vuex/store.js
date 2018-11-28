@@ -16,6 +16,7 @@ if(process.env.NODE_ENV !== 'production'){//判断是否是生产模式
 }
 const state = {
   url:q3Url+"/Rest.aspx",
+  href:q3Url,
   webUrl:webUrl,
   pathID:1,
 }

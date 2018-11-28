@@ -3,10 +3,30 @@
         <scroller height="100%" lock-x @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
             <ul class="box2 myorder" style="position:relative;">
                     <li v-for="(item,index) in orderList" :key="index">
-                    <div class="form1"><span class="sp1">单号</span><span>{{item.Member_ID}}</span></div>
-                    <div class="form2"><span class="sp1">交易门店</span><span>{{item.Customer_Name}}</span></div>
-                    <div class="form1"><span class="sp1">金额</span><span>¥{{item.Money}}</span></div>
-                    <div class="form2"><span class="sp1">交易日期</span><span>{{item.Time}}</span></div>
+                        <div class="form1">
+                            <span class="sp1">单号</span>
+                            <span>{{item.Member_ID}}</span>
+                        </div>
+                        <div class="form2">
+                            <span class="sp1">交易门店</span>
+                            <span style="overflow:hidden;width:2.8rem;white-space:nowrap;text-overflow:ellipsis;">{{item.Customer_Name}}</span>
+                        </div>
+                        <div class="form1">
+                            <span class="sp1">金额</span><span>¥{{item.Money}}</span>
+                        </div>
+                        <div class="form2">
+                            <span class="sp1">交易日期</span>
+                            <span>{{item.Time}}</span>
+                        </div>
+                        <div class="form">
+                            <div class="invoice">
+                                <span>开票状态</span>
+                                <span>未开票</span>
+                            </div>
+                            <div class="invoice" style="text-align:right;">
+                                <span class="playinvoice" :class="{isinvoice:isInvoice}" @click="playinvoice()">申请开票</span>
+                            </div>
+                        </div>
                     </li>
                     <li v-if="orderList.length === 0" style="font-size:0.36rem;height:0.8rem;line-height:0.8rem;">暂无任何订单....</li>
                     <load-more :show-loading="false" :tip="'暂无更多数据'" background-color="#fbf9fe" v-if="orderList.length !== 0"></load-more>
@@ -32,9 +52,16 @@ import { XInput,Scroller,LoadMore } from 'vux'
                 PageIndex:0,
                 onFetching:false,
                 isShow:false,
+                isInvoice:true,
             }
         },
         methods:{
+            playinvoice(){
+                if(this.isInvoice){
+                    let url = this.$store.state.href;
+                    window.location.href =url+'/zyywx/invoice.html';
+                }
+            },
             onScrollBottom () {
                 if (this.onFetching) {
                     // do nothing
@@ -128,15 +155,32 @@ import { XInput,Scroller,LoadMore } from 'vux'
     }
     .myorder li div{
         font-size: 0.28rem;
-        padding: 0.2rem 0;
+        padding: 0.1rem 0;
         float: left;
         text-align: left;
+    }
+    .myorder li .form{
+        width: 100%;
+        display: flex;
+    }
+    .myorder li  .form .invoice{
+        flex: 1;
+        padding:0 0.15rem;
+
+    }
+    .myorder li  .form .invoice .playinvoice{
+        padding: 0 0.2rem;
+        background: #ccc;
+        border-radius: 0.2rem;
     }
     .myorder li .form1{
         width: 35%;
     }
     .myorder li .form2{
         width: 65%;
+    }
+    .myorder li .form2 span{
+        float:left;
     }
     .myorder li div span{
         display: inline-block;
@@ -159,5 +203,8 @@ import { XInput,Scroller,LoadMore } from 'vux'
         width:80%;
         margin:0 auto;
         font-size:0.3rem;
+    }
+    .isinvoice{
+        background: #439057 !important;
     }
 </style>
